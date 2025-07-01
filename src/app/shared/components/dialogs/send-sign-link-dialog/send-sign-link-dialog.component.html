@@ -1,0 +1,51 @@
+<form [formGroup]="sendLinkForm" class="space-y-5">
+    <div>
+        <label>Send link mean</label>
+        <p-select
+            appendTo="body"
+            [options]="contactTypes"
+            optionLabel="name"
+            optionValue="value"
+            formControlName="contact_type"
+            (onChange)="onContactTypeChange($event)"
+            class="w-full"/>
+    </div>
+
+    @if (contactType === 'phone') {
+        <div>
+            <label>Telephones</label>
+            <p-select
+                appendTo="body"
+                [options]="telephones"
+                optionLabel="telephone"
+                optionValue="telephone"
+                formControlName="phone"
+                [loading]="isLoading"
+                class="w-full"/>
+        </div>
+    }
+
+    @if (contactType === 'email') {
+        <div>
+            <label>Emails</label>
+            <p-select
+                appendTo="body"
+                [options]="emails"
+                optionLabel="email"
+                optionValue="email"
+                formControlName="email"
+                [loading]="isLoading"
+                class="w-full"/>
+        </div>
+    }
+
+    <div class="text-right">
+        <p-button
+            label="Send link"
+            [loading]="isSending"
+            severity="success"
+            icon="pi pi-send"
+            (click)="contactType === 'phone' ? sendLinkByTelephone() : sendLinkByEmail()"
+        />
+    </div>
+</form>

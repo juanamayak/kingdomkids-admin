@@ -1,0 +1,171 @@
+@if (contract) {
+    <div class="w-1/2 mx-auto space-y-5">
+        <div>
+            <div class="flex items-center justify-between space-x-2">
+                <div class="flex items-center space-x-2">
+                    <p-button
+                        icon="pi pi-arrow-left"
+                        [rounded]="true"
+                        severity="secondary"
+                        [outlined]="true"
+                        (click)="goBack()"
+                    />
+                    <h3 class="text-xl font-semibold ">Contract detail: #{{ contract.contract }} </h3>
+                </div>
+                @for (status of contractStatus; track status) {
+                    @if (status.value === contract.status) {
+                        <span class="{{ status.styles }} font-medium me-2 px-2.5 py-0.5 rounded-full">
+                                {{ status.name }}
+                            </span>
+                    }
+                }
+            </div>
+        </div>
+
+        @if (updateContractsForm) {
+            <form [formGroup]="updateContractsForm" class="p-5 border rounded-xl text-sm">
+                <div class="flex justify-between items-center px-4 sm:px-0">
+                    <div>
+                        <h3 class="text-base/7 font-semibold text-gray-900">Contract information</h3>
+                        <p class="max-w-2xl text-sm/6 text-gray-500">General information about contract</p>
+                    </div>
+                    @if ([0, 1].includes(contract.status) && !contract.pdf) {
+                        <div class="flex items-center space-x-2">
+                            <label class="-mt-1">Edit</label>
+                            <p-toggleswitch (onChange)="enableUpdateContractForm($event)"/>
+                        </div>
+                    }
+
+                </div>
+                <div class="mt-6 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Contract number</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                <input type="text" pInputText formControlName="contract"/>
+                            </dd>
+                        </div>
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Developer</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                <p-select
+                                    [options]="developers"
+                                    [loading]="!developers"
+                                    optionLabel="name"
+                                    optionValue="uuid"
+                                    formControlName="developer_uuid"
+                                    placeholder="Select a Developer"
+                                    class="w-full"/>
+                            </dd>
+                        </div>
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Membership Price</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                <div class="flex items-center gap-3">
+                                    <p-input-number formControlName="membership_price" prefix="$" class="w-full"/>
+                                    <p-select [options]="currency" formControlName="currency" optionLabel="name"
+                                              optionValue="name"
+                                              placeholder="Select Currency" class="w-full"/>
+                                </div>
+                            </dd>
+                        </div>
+
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Property description</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                <input type="text" pInputText placeholder="Enter a description"
+                                       formControlName="property_description" class="w-full"/>
+                            </dd>
+                        </div>
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Charge Date</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                <p-date-picker formControlName="charge_date" placeholder="dd/mm/yyyy"
+                                               [dateFormat]="'dd/mm/yy'"/>
+                            </dd>
+                        </div>
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Sign Date</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                <p-date-picker formControlName="sign_date" placeholder="dd/mm/yyyy"
+                                               [dateFormat]="'dd/mm/yy'"/>
+                            </dd>
+                        </div>
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Authorization Date</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                @if (contract.created_at) {
+                                    <span>{{ contract.authorize_date | date }}</span>
+                                } @else {
+                                    <span class="text-gray-400 italic">WITHOUT DATE</span>
+                                }
+
+                            </dd>
+                        </div>
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Sent Date</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                @if (contract.created_at) {
+                                    <span>{{ contract.sent_date | date }}</span>
+                                } @else {
+                                    <span class="text-gray-400 italic">WITHOUT DATE</span>
+                                }
+
+                            </dd>
+                        </div>
+                        @if (contract.created_at) {
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Trash Date</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <span>{{ contract.trash_date | date }}</span>
+                                </dd>
+                            </div>
+                        }
+                        <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm/6 font-medium text-gray-900">Documentation</dt>
+                            <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                @if (contract.pdf) {
+                                    <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                                        <li class="flex items-center justify-between py-4 pr-5 pl-4 text-sm/6">
+                                            <div class="flex w-0 flex-1 items-center">
+                                                <i class="pi pi-paperclip"></i>
+                                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                                    <span class="truncate font-medium">{{ contract.pdf }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4 shrink-0">
+                                                <p-button
+                                                    icon="pi pi-download"
+                                                    [rounded]="true"
+                                                    severity="info"
+                                                    [outlined]="true"
+                                                    [loading]="isDownloading"
+                                                    (click)="downloadContract()"
+                                                />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                } @else {
+                                    <span class="text-gray-400 italic">NO FILE ADDED</span>
+                                }
+                            </dd>
+                        </div>
+                    </dl>
+                    @if ([0, 1].includes(contract.status) && !contract.pdf) {
+                        <div class="py-8 text-right">
+                            <p-button
+                                label="Save ccontract information"
+                                icon="pi pi-save"
+                                severity="success"
+                                [loading]="isUpdating"
+                                [disabled]="updateContractsForm.disabled"
+                                (click)="updateContract()"
+                            />
+                        </div>
+                    }
+                </div>
+            </form>
+        }
+    </div>
+}
+<p-confirm-dialog/>

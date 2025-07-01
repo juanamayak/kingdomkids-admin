@@ -1,0 +1,144 @@
+@if (contract) {
+    <div class="w-1/2 mx-auto space-y-5">
+        <div>
+            <div class="flex items-center space-x-2">
+                <p-button
+                    icon="pi pi-arrow-left"
+                    [rounded]="true"
+                    severity="secondary"
+                    [outlined]="true"
+                    (click)="goBack()"
+                />
+                <h3 class="text-xl font-semibold ">Client information</h3>
+            </div>
+        </div>
+
+        <div class="flex gap-5">
+            @if (updateClientsForm) {
+                <form [formGroup]="updateClientsForm" class="p-5 border rounded-xl text-sm">
+                    <div class="flex justify-between items-center px-4 sm:px-0">
+                        <div>
+                            <h3 class="text-base/7 font-semibold text-gray-900">Client information</h3>
+                            <p class="max-w-2xl text-sm/6 text-gray-500">General information about clients</p>
+                        </div>
+                        @if ([0, 1].includes(contract.status) && !contract.pdf) {
+                            <div class="flex items-center space-x-2">
+                                <label class="-mt-1">Edit</label>
+                                <p-toggleswitch (onChange)="enableUpdateClientsForm($event)"/>
+
+                            </div>
+                        }
+
+                    </div>
+                    <div class="mt-6 border-t border-gray-100">
+                        <dl class="divide-y divide-gray-100">
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Nombre del cliente</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <div class="flex items-center gap-3">
+                                        <input type="text" pInputText formControlName="name"/>
+                                        <input type="text" pInputText formControlName="lastname"/>
+                                    </div>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Pais</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <p-select
+                                        [options]="countries"
+                                        [loading]="!countries"
+                                        formControlName="country"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        placeholder="Country"
+                                        class="w-full"
+                                        (onChange)="getStates($event)"
+                                    />
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Estado</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <p-select
+                                        [options]="states"
+                                        formControlName="state"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        placeholder="State"
+                                        class="w-full"
+                                        (onChange)="getCities($event)"
+                                    />
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Ciudad</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <p-select
+                                        [options]="cities"
+                                        formControlName="city"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        placeholder="City"
+                                        class="w-full"
+                                    />
+                                </dd>
+                            </div>
+
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Address</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <input type="text" pInputText formControlName="address" placeholder="Enter your address"
+                                           class="w-full"/>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Zip Code</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <input type="text" pInputText formControlName="zip" placeholder="Enter your zip code"
+                                           class="w-full"/>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Language</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <p-select [options]="languages" formControlName="language" optionLabel="name"
+                                              optionValue="value" placeholder="Select language" class="w-full"/>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Emails</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    @for (email of emails; track email) {
+                                        <span>{{email.email}}</span>
+                                    }
+                                </dd>
+                            </div>
+                            <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-gray-900">Telephones</dt>
+                                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    @for (telephone of telephones; track telephone) {
+                                        <span>{{telephone.telephone}}</span><br>
+                                    }
+                                </dd>
+                            </div>
+                        </dl>
+
+                        @if ([0, 1].includes(contract.status) && !contract.pdf) {
+                            <div class="py-8 text-right">
+                                <p-button
+                                    label="Save client information"
+                                    icon="pi pi-save"
+                                    severity="success"
+                                    [loading]="isUpdating"
+                                    [disabled]="updateClientsForm.disabled"
+                                    (click)="updateClientInfo()"
+                                />
+                            </div>
+                        }
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+}
+<p-confirm-dialog/>

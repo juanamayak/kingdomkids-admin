@@ -1,0 +1,101 @@
+<div class="w-1/2 mx-auto space-y-5">
+    <div>
+        <div class="flex items-center space-x-2">
+            <p-button
+                icon="pi pi-arrow-left"
+                [rounded]="true"
+                severity="secondary"
+                [outlined]="true"
+                (click)="goBack()"
+            />
+            <div class="flex items-center space-x-2">
+                <i class="pi pi-file-pdf"></i>
+                <h3 class="text-xl font-semibold">Contract Documentation</h3>
+            </div>
+        </div>
+        <span class="text-sm text-gray-500 mb-2">You have different options to add the required documentation</span>
+    </div>
+    @if (fileUploaded || contract.pdf) {
+        <div>
+            <p-message severity="success" icon="pi pi-check-circle"
+                       text="The contract has been signed and uploaded successfully" styleClass="h-full"/>
+        </div>
+    }
+
+    <div class="flex flex-col sticky top-20">
+        <div class="flex items-center space-x-2 mb-5">
+            <i class="pi pi-pencil"></i>
+            <h3 class="">Sign Contract</h3>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <p-button
+                label="Open and Sign"
+                icon="pi pi-external-link"
+                severity="contrast"
+                (click)="openSignContractDialog()"
+            />
+            <p-button
+                label="Send sign link"
+                icon="pi pi-send"
+                severity="info"
+                (click)="openSendSignLinkDialog()"
+            />
+        </div>
+
+        <div class="inline-flex items-center justify-center w-full">
+            <hr class="w-full h-px my-8 bg-gray-200 border-0">
+            <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">Or</span>
+        </div>
+
+        <p-button
+            label="Attach the contract"
+            icon="pi pi-file-arrow-up"
+            severity="contrast"
+            [outlined]="!showAttatchContract"
+            (click)="showAttatchContract = !showAttatchContract"
+        />
+
+        @if (showAttatchContract) {
+            <p-panel header="Follow the instructions" class="mt-5">
+                <div class="mb-5">
+                    <h3 class="text-sm text-gray-500 mb-2">1. Download the contract form, complete the required information
+                        and sign the contract physically.</h3>
+                    <p-button
+                        label="Download Form"
+                        icon="pi pi-download"
+                        severity="contrast"
+                        [loading]="isDownloading"
+                        (click)="downloadFormat()"
+                    />
+                </div>
+
+                <h3 class="text-sm text-gray-500 mb-2">2. Once signed, scan or export the document as a PDF file and
+                    upload the signed contract.</h3>
+
+                <div class="flex items-center space-x-5">
+                    <p-fileupload #fu
+                                  [customUpload]="true"
+                                  (uploadHandler)="onUpload($event)"
+                                  [disabled]="isUploading"
+                                  mode="basic"
+                                  chooseLabel="Choose Files"
+                                  chooseIcon="pi pi-upload"
+                                  accept="application/pdf"
+                                  maxFileSize="1000000"
+                    />
+
+                    <p-button
+                        label="Upload document"
+                        (onClick)="fu.upload()"
+                        severity="success"
+                        [loading]="isUploading"
+                    />
+                </div>
+            </p-panel>
+        }
+
+    </div>
+</div>
+<p-toast position="bottom-right"/>
+<p-confirm-dialog/>

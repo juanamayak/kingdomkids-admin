@@ -1,0 +1,32 @@
+<div class="space-y-5">
+
+    <div class="w-full bg-slate-100 border rounded-lg">
+        <canvas class="bg-slate-200 mx-auto block" width="500" height="200px"
+                id="signature-canvas" #canvas></canvas>
+    </div>
+
+    <div class="flex justify-between items-center">
+        <div class="space-x-2">
+            <p-button
+                label="Undo"
+                icon="pi pi-undo"
+                severity="secondary"
+                variant="outlined"
+                (click)="undo()"
+            />
+            <p-button
+                label="Erase all"
+                icon="pi pi-eraser"
+                severity="secondary"
+                variant="outlined"
+                (click)="clear()"
+            />
+        </div>
+        <p-button
+            label="Sign and Upload"
+            icon="pi pi-file-arrow-up"
+            (click)="emitSignature()"
+        />
+    </div>
+
+</div>

@@ -1,0 +1,19 @@
+<nav class="fixed top-0 left-0 right-0 z-10 shadow bg-white">
+    <div class="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+            <div class="flex items-center justify-start rtl:justify-end">
+                <ng-content></ng-content>
+                <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+                    <img src="images/logo-buyback.png" class="h-10 me-3" alt="FlowBite Logo" />
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"></span>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <div class="flex items-center ms-3">
+                    <p-button (click)="menu.toggle($event)" icon="pi pi-user" [rounded]="true" severity="secondary" />
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<p-menu #menu [model]="items" [popup]="true" />

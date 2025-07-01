@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'tailwind';
+@import "primeicons/primeicons.css";
+
+label {
+    @apply text-slate-600 font-medium text-sm;
+}
+
+.p-password, .p-inputtext {
+    @apply w-full;
+}
+
+.p-login-button {
+    .p-button {
+        width: 100% !important;
+        margin-top: 1rem;
+    }
+}
+
+.p-popover-content {
+    padding: 0 !important;
+}
+
+.p-fileupload-basic {
+    justify-content: start !important;
+}
+
+/* SweetAlert 2 Custom CSS */
+
+div#swal2-html-container {
+    padding-top: 0px !important;
+}
+
+.swal2-container {
+    z-index: 10000 !important;
+}
+
+
+/* Ngx Intl Tel Input */
+
+ngx-intl-tel-input {
+    width: 100% !important;
+
+    .iti--allow-dropdown {
+        width: 100% !important;
+
+        .iti__tel-input {
+            width: 100% !important;
+        }
+    }
+}
+
+.iti__country-list {
+    max-height: 300px !important; /* o lo que se adapte a tu UI */
+    overflow-y: auto !important;
+    z-index: 10000 !important; /* Asegura que esté por encima de otros elementos */
+}
+
+#country-search-box {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+
+

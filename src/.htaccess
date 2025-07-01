@@ -1,0 +1,61 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+
+# Force https
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# If an existing asset or directory is requested go to it as it is
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# If the requested resource doesn't exist, use index.html
+RewriteRule ^ /index.html
+
+<FilesMatch "^(?!.*\.([0-9a-z]{16})\.).*$">
+    <IfModule mod_headers.c>
+        FileETag None
+        Header unset ETag
+        Header unset Pragma
+        Header unset Cache-Control
+        Header unset Last-Modified
+        Header set Pragma "no-cache"
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Expires "Mon, 1 Jan 1900 00:00:00 GMT"
+    </IfModule>
+</FilesMatch>
+
+
+<IfModule mod_headers.c>
+
+# Provides mechanisms for web developers to explicitly declare what functionality can and cannot be used on a website
+    Header set Permissions-Policy "geolocation=self"
+
+# Added layer of security that helps to detect and mitigate certain types of attacks
+    Header always set Content-Security-Policy "upgrade-insecure-requests;"
+
+# Forces a client to make all requests using https
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
+    
+# Prevents the webpage to be served inside any kind of frames
+    Header set X-Frame-Options "DENY" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+
+# Tries to enable the XSS filter from the client in case it has been disabled
+    Header set X-XSS-Protection "1; mode=block" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+
+# Prevents client to know the MIME type of the response until it has arrived
+    Header set X-Content-Type-Options "nosniff"
+
+# Prevents the browser to serve http contents on a https connection
+    Header set Referrer-Policy "no-referrer-when-downgrade" "expr=%{CONTENT_TYPE} =~ m#text/html#i"
+
+# Disables all features to prevent any attacks on the site to use them
+    Header set Feature-Policy "geolocation 'none'; midi 'none'; sync-xhr 'self'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'"
+</IfModule>
+
+# Renames the header that indicates we are using Apache
+    ServerSignature Off

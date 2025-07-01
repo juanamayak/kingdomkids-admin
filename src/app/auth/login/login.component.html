@@ -1,0 +1,30 @@
+<!-- bg-[url(/images/airport-terminal.jpg)] bg-gray-600 bg-blend-multiply bg-cover bg-no-repeat -->
+<div class="flex bg-zinc-100 bg-cover bg-no-repeat h-full flex-col justify-center items-center">
+    <div class="w-1/4 p-10 space-y-5 rounded-3xl bg-white border">
+        <div>
+            <h3 class="text-3xl font-bold text-sky-600">Bienvenido</h3>
+            <p class="font-normal text-gray-900">Ingresa tu usuario y contraseña</p>
+        </div>
+
+        <form [formGroup]="loginForm" class="space-y-3" (keydown.enter)="onLogin()">
+            <div>
+                <label>Nombre de usuario</label>
+                <input type="text" pInputText formControlName="username"/>
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <p-password [feedback]="false" [toggleMask]="true" formControlName="password"/>
+            </div>
+            <p-button
+                label="Iniciar sesión"
+                size="small"
+                icon="pi pi-sign-in"
+                class="p-login-button"
+                (click)="onLogin()"
+                [loading]="isLoading"
+            />
+        </form>
+    </div>
+
+    <p class="text-gray-400 mt-3">&#64; {{ currentYear }} BuyBack. All rights reserved.</p>
+</div>

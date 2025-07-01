@@ -1,0 +1,311 @@
+<!-- Card Section -->
+<div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
+    <div class="bg-white border rounded-2xl p-4 sm:p-7">
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800">
+                Create new contract
+            </h2>
+            <p class="text-sm text-gray-600">
+                Enter de contract information
+            </p>
+        </div>
+
+        <form [formGroup]="createContractsForm" class="space-y-5">
+            <!-- Grid -->
+            <div formGroupName="contract" class="grid sm:grid-cols-12 gap-2 sm:gap-5">
+                <h3 class="font-semibold text-gray-500 bg-gray-200 px-3 py-2 rounded-md sm:col-span-12">
+                    Contract information
+                </h3>
+                <div class="sm:col-span-3">
+                    <label for="af-account-email" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Developer
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-9">
+                    <p-select
+                        [options]="developers"
+                        [loading]="!developers"
+                        optionLabel="name"
+                        optionValue="uuid"
+                        formControlName="developer_uuid"
+                        placeholder="Select a Developer"
+                        class="w-full"/>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Contract number
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-9">
+                    <input type="text" pInputText placeholder="DEMO-000001" formControlName="contract" class="w-full"/>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Property description
+                    </label>
+                </div>
+
+                <div class="sm:col-span-9">
+                    <input type="text" pInputText placeholder="Enter a description"
+                           formControlName="property_description" class="w-full"/>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-email" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Membership Price
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-5">
+                    <p-input-number formControlName="membership_price" prefix="$" class="w-full"/>
+                </div>
+                <div class="sm:col-span-4">
+                    <p-select [options]="currency" formControlName="currency" optionLabel="name" optionValue="name"
+                              placeholder="Select Currency" class="w-full"/>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-password" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Charge Date
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-9">
+                    <p-date-picker formControlName="charge_date" placeholder="dd/mm/yyyy" [dateFormat]="'dd/mm/yy'"/>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-password" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Sign Date
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-9">
+                    <p-date-picker formControlName="sign_date" placeholder="dd/mm/yyyy" [dateFormat]="'dd/mm/yy'"/>
+                </div>
+                <!-- End Col -->
+
+            </div>
+            <div formGroupName="client" class="grid sm:grid-cols-12 gap-2 sm:gap-5">
+                <h3 class="font-semibold text-gray-500 bg-gray-200 px-3 py-2 rounded-md sm:col-span-12">
+                    Client information
+                </h3>
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Client Full Name
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-4">
+                    <div class="sm:flex gap-3">
+                        <input type="text" pInputText formControlName="name" placeholder="Enter your name"/>
+                    </div>
+                </div>
+                <div class="sm:col-span-4">
+                    <div class="sm:flex gap-3">
+                        <input type="text" pInputText formControlName="lastname" placeholder="Enter your lastname"/>
+                    </div>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Location Information
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-3">
+                    <div class="sm:flex gap-3">
+                        <p-select
+                            [options]="countries"
+                            [loading]="!countries"
+                            formControlName="country"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="Country"
+                            class="w-full"
+                            (onChange)="getStates($event)"
+                        />
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <div class="sm:flex gap-3">
+                        <p-select
+                            [options]="states"
+                            formControlName="state"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="State"
+                            class="w-full"
+                            (onChange)="getCities($event)"
+                        />
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <div class="sm:flex gap-3">
+                        <p-select
+                            [options]="cities"
+                            formControlName="city"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="City"
+                            class="w-full"
+                        />
+                    </div>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Address Information
+                    </label>
+                </div>
+
+                <div class="sm:col-span-6">
+                    <div class="sm:flex gap-3">
+                        <input type="text" pInputText formControlName="address" placeholder="Enter your address"
+                               class="w-full"/>
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <div class="sm:flex gap-3">
+                        <input type="text" pInputText formControlName="zip" placeholder="Enter your zip code"
+                               class="w-full"/>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                        Language
+                    </label>
+                </div>
+
+                <div class="sm:col-span-4">
+                    <div class="sm:flex gap-3">
+                        <p-select [options]="languages" formControlName="language" optionLabel="name"
+                                  optionValue="value" placeholder="Select language" class="w-full"/>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="emails" class="grid sm:grid-cols-12 gap-2 sm:gap-5">
+                <h3 class="font-semibold text-gray-500 bg-gray-200 px-3 py-2 rounded-md sm:col-span-12">
+                    Contact information
+                </h3>
+                @for (email of emails.controls; track email) {
+                    <div class="sm:col-span-3">
+                        <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                            Email {{ $index + 1 }}
+                        </label>
+                    </div>
+
+                    <div class="sm:col-span-6">
+                        <div class="sm:flex gap-3" [formGroupName]="$index">
+                            <input type="email" pInputText formControlName="email" placeholder="Enter email address"/>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-3">
+                        <div class="sm:flex space-x-2">
+                            @if (emails.controls.length > 1) {
+                                <p-button icon="pi pi-times" [rounded]="true" severity="danger"
+                                          (click)="deleteEmail($index)"/>
+                            }
+                            @if (emails.controls.length === $index + 1) {
+                                <p-button icon="pi pi-plus" [rounded]="true" [disabled]="createContractsForm.disabled"
+                                          severity="success" (click)="addEmail()"/>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div formArrayName="telephones" class="grid sm:grid-cols-12 gap-2 sm:gap-5">
+                @for (telephone of telephones.controls; track telephone) {
+                    <div class="sm:col-span-3">
+                        <label for="af-account-full-name" class="inline-block text-sm text-gray-800 mt-2.5">
+                            Phone number {{ $index + 1 }}
+                        </label>
+                    </div>
+
+                    <div class="sm:col-span-6">
+                        <div class="sm:flex gap-3" [formGroupName]="$index">
+
+                            <p-select
+                                [options]="phoneCodes"
+                                formControlName="code"
+                                optionLabel="code"
+                                optionValue="dialCode"
+                                [filter]="true"
+                                filterBy="name"
+                                [showClear]="true"
+                                placeholder="Code"
+                            class="w-1/2">
+                                <ng-template #selectedItem let-selectedOption>
+                                    <div class="flex items-center gap-2">
+                                        <img src="{{ selectedOption.flag }}"
+                                             [class]="'flag flag-' + selectedOption.dialCode.toLowerCase()"
+                                             style="width: 18px"/>
+                                        <div>
+                                            {{ selectedOption.dialCode }}
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-country #item>
+                                    <div class="flex items-center gap-2">
+                                        <img src="{{ country.flag }}"
+                                             [class]="'flag flag-' + country.dialCode.toLowerCase()"
+                                             style="width: 18px"/>
+                                        <div>
+                                            <span> {{ country.dialCode }}</span> - <span
+                                            class="text-gray-400">{{ country.name }} </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-select>
+                            <p-inputmask mask="9999999999" formControlName="telephone" placeholder="Phone Number"
+                                         class="w-1/2"/>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-3">
+                        <div class="sm:flex space-x-2">
+                            @if (telephones.controls.length > 1) {
+                                <p-button icon="pi pi-times" [rounded]="true" severity="danger"
+                                          (click)="deleteTelephone($index)"/>
+                            }
+                            @if (telephones.controls.length === $index + 1) {
+                                <p-button icon="pi pi-plus" [rounded]="true" [disabled]="createContractsForm.disabled"
+                                          severity="success" (click)="addTelephone()"/>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <hr>
+            <div class="flex justify-center w-full">
+                <p-button
+                    label="Create contract"
+                    severity="success"
+                    [loading]="isLoading"
+                    [disabled]="createContractsForm.invalid"
+                    (click)="createContracts($event)"
+                />
+            </div>
+        </form>
+    </div>
+    <!-- End Card -->
+</div>
+<!-- End Card Section -->
+<p-toast position="bottom-right"/>
+<p-confirm-dialog/>
