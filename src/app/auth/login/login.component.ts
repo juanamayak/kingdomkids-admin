@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
                 const token = res.token;
                 sessionStorage.setItem(this.sessionService.jwtToken, token);
 
-                this.router.navigate(['inicio']);
+                this.router.navigate(['kids']);
 
                 this.isLoading = false;
             },

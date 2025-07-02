@@ -1,7 +1,7 @@
 <aside class="fixed top-0 left-0 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0">
-    <div class="h-full overflow-y-auto bg-gradient-to-b from-sky-600 to-sky-800 py-4 px-4 space-y-3">
+    <div class="h-full overflow-y-auto bg-gradient-to-b from-zinc-600 to-zinc-800 py-4 px-4 space-y-3">
         <ul class="space-y-1 text-sm">
-            <h1 class="uppercase text-slate-200 font-semibold text-xs">Admin</h1>
+            <h1 class="uppercase text-slate-200 font-semibold text-xs">Menú</h1>
             <!--<li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
                     <mat-icon [svgIcon]="'heroicons_outline:home'"></mat-icon>
@@ -9,66 +9,17 @@
                 </a>
             </li>-->
             <li>
-                <a [routerLink]="['contracts/create']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-plus"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Create contracts</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="space-y-1 text-sm">
-            <h1 class="uppercase text-slate-200 font-semibold text-xs">Contracts</h1>
-            <li>
-                <a [routerLink]="['contracts/created']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-folder-plus"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Created</span>
-                </a>
-            </li>
-
-            <li>
-                <a [routerLink]="['contracts/authorized']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-verified"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Authorized</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['contracts/sent']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-send"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Sent to Buyback</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['contracts/active']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-check"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Active</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['contracts/finished']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-flag"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Finished</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['contracts/canceled']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-times"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Canceled</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['contracts/trash']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
-                    <i class="pi pi-trash"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Trash</span>
-                </a>
-            </li>
-        </ul>
-        <!--<ul class="space-y-1 text-sm">
-            <h1 class="uppercase text-slate-200 font-semibold text-xs">Configuration</h1>
-            <li>
-                <a [routerLink]="['users']" class="flex items-center p-2 text-white rounded-lg hover:bg-sky-800 group">
+                <a [routerLink]="['kids']" class="flex items-center p-2 text-white rounded-lg hover:bg-zinc-800 group">
                     <i class="pi pi-users"></i>
-                    <span class="ms-3">Users</span>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Niños registrados</span>
                 </a>
             </li>
-        </ul>-->
+            <li>
+                <a [routerLink]="['contracts/created']" class="flex items-center p-2 text-white rounded-lg hover:bg-zinc-800 group">
+                    <i class="pi pi-sign-out"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Cerrar sesión</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </aside>

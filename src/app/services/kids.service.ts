@@ -10,10 +10,16 @@ export class KidsService {
     private url = environment.urlApi;
     private httpClient = inject(HttpClient);
 
+    public kidToken = 'X1uA4MkMU4UrLw';
+
     constructor() {
     }
 
     getKids(): Observable<any> {
         return this.httpClient.get(`${this.url}/register`);
+    }
+
+    getKidsAgeReport(age: number): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/${age}`, {responseType: 'blob'});
     }
 }
