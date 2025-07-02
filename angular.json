@@ -19,7 +19,13 @@
                     "options": {
                         "allowedCommonJsDependencies": [
                             "sweetalert2",
-                            "moment"
+                            "moment",
+                            "html2canvas",
+                            "moment",
+                            "jspdf-autotable",
+                            "raf",
+                            "core-js",
+                            "rgbcolor"
                         ],
                         "outputPath": "dist",
                         "index": "src/index.html",
