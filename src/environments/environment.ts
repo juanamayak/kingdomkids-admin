@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  urlApi: 'https://api.flyback.com.mx/buyback-service/add/testing/api'
+    production: true,
+    urlApi: 'https://api.mundodefeplaya.org:3035/api',
 };

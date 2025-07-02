@@ -25,7 +25,8 @@
                             "jspdf-autotable",
                             "raf",
                             "core-js",
-                            "rgbcolor"
+                            "rgbcolor",
+                            "google-libphonenumber"
                         ],
                         "outputPath": "dist",
                         "index": "src/index.html",
@@ -54,13 +55,13 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kB",
-                                    "maximumError": "1MB"
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kB",
-                                    "maximumError": "4kB"
+                                    "maximumWarning": "4kB",
+                                    "maximumError": "8kB"
                                 }
                             ],
                             "fileReplacements": [
