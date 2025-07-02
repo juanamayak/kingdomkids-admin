@@ -5,12 +5,11 @@ import {UsersComponent} from "./users/users.component";
 import {KidsComponent} from "./kids/kids.component";
 
 export default [
-    { path: 'kids', component: KidsComponent },
     {
-        path: 'contracts',
+        path: 'kids',
         children: [
             {
-                path: '', loadChildren: () => import('./contracts/contracts.routes')
+                path: '', loadChildren: () => import('./kids/kids.routes')
             },
         ],
     },

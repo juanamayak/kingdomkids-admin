@@ -22,4 +22,8 @@ export class KidsService {
     getKidsAgeReport(age: number): Observable<any> {
         return this.httpClient.get(`${this.url}/reports/${age}`, {responseType: 'blob'});
     }
+
+    public getConfirmationRegister(id: any): Observable<any> {
+        return this.httpClient.get(`${this.url}/register/confirmation/${id}`);
+    }
 }

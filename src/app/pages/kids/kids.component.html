@@ -113,7 +113,10 @@
                 class="w-1/2"
                 (onChange)="filterByAge($event)"
             />
-            <p-button (click)="getExcelReport()" label="Descargar Excel" icon="pi pi-file-excel" [loading]="isDownloading" />
+            @if (selectedAge) {
+                <p-button (click)="getExcelReport()" label="Descargar Excel" icon="pi pi-file-excel" [loading]="isDownloading" />
+                <p-button (click)="clearFilter()" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+            }
         </div>
     </div>
     <div class="p-5 border rounded-xl text-sm">
@@ -134,9 +137,9 @@
                     <th>Nombre</th>
                     <th>Apellidos</th>
                     <th>Cumpleaños</th>
-                    <th>Edad</th><!--
+                    <th>Edad</th>
                     <th>Alergía</th>
-                    <th>Condición Médica</th>-->
+                    <th>Condición Médica</th>
                     <th>Menú</th>
                 </tr>
             </ng-template>
@@ -146,20 +149,20 @@
                     <td>{{ kid.lastname }}</td>
                     <td>{{ kid.birthday | date }}</td>
                     <td>{{ kid.age }} años</td>
-                    <!--<td>
+                    <td>
                         @if (kid.allergy) {
-                            {{ kid.allergy_description }}
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">SI</span>
                         } @else {
                             <span class="text-slate-400 italic text-xs">NO ALERGIAS</span>
                         }
                     </td>
                     <td>
                         @if (kid.medical_condition) {
-                            {{ kid.medical_condition_description }}
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">SI</span>
                         } @else {
                             <span class="text-slate-400 italic text-xs">SIN CONDICIONES MÉDICAS</span>
                         }
-                    </td>-->
+                    </td>
                     <td>
                         <p-button icon="pi pi-ellipsis-v"
                                   [rounded]="true"

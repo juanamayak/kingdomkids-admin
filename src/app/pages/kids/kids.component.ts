@@ -46,7 +46,7 @@ export class KidsComponent implements OnInit {
     public medicalConditionKids: number[] = [];
     public mdfMembers: number[] = [];
 
-    public selectedAge: number = 5;
+    public selectedAge: number = 0;
 
     public isDownloading: boolean = false;
 
@@ -88,12 +88,17 @@ export class KidsComponent implements OnInit {
 
     public viewKidInformation(kid: any){
         localStorage.setItem(this.kidsService.kidToken, btoa(JSON.stringify(kid)));
-        this.router.navigate(['/contracts/client']);
+        this.router.navigate(['/kids/detail']);
     }
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.table?.filterGlobal(filterValue, 'contains');
+    }
+
+    clearFilter() {
+        this.table?.clear();
+        this.selectedAge = 0;
     }
 
     filterByAge(event: any): void {

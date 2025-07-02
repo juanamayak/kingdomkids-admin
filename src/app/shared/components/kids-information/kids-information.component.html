@@ -1,1 +1,157 @@
-<p>kids-information works!</p>
+<div class="w-1/2 mx-auto space-y-5">
+    <div class="flex items-center space-x-2">
+        <p-button
+            icon="pi pi-arrow-left"
+            [rounded]="true"
+            severity="secondary"
+            [outlined]="true"
+            (click)="goBack()"
+        />
+        <h3 class="text-xl font-semibold ">Información de {{ kidInformation.name }} {{kidInformation.lastname }}</h3>
+    </div>
+
+    <div class="p-5 border rounded-xl text-sm">
+        <div>
+            <h3 class="text-base/7 font-semibold text-gray-900">Información general</h3>
+            <p class="max-w-2xl text-sm/6 text-gray-500">Información completa del niño registro a la escuela de verano</p>
+        </div>
+        <div class="mt-6 border-t border-gray-100">
+            <dl class="divide-y divide-gray-100">
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Nombre completo</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <span>{{ kidInformation.name }} {{kidInformation.lastname }}</span>
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Cumpleaños</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <span>{{ kidInformation.birthday | date}}</span>
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Edad</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <span>{{ kidInformation.age }} años</span>
+                    </dd>
+                </div>
+
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Dirección</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <span>{{ kidInformation.address }}</span>
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Alergias</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        @if (kidInformation.allergy) {
+                            <span>{{ kidInformation.allergy_description }}</span>
+                        } @else {
+                            <span class="text-gray-400 uppercase italic">Sin alergias</span>
+                        }
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Condición médica</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        @if (kidInformation.medical_condition) {
+                            <span>{{ kidInformation.medical_condition_description }}</span>
+                        } @else {
+                            <span class="text-gray-400 uppercase italic">Sin condición médica</span>
+                        }
+
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Miembro Mundo de Fe Playa</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        @if (kidInformation.mdf_member) {
+                            <span>SI</span>
+                        } @else {
+                            <span>NO</span>
+                        }
+
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Nombre de la Iglesia</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        @if (kidInformation.mdf_member) {
+                            <span class="text-gray-400 uppercase italic">No aplica</span>
+                        } @else {
+                            <span>{{ kidInformation.another_church_name }}</span>
+                        }
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">¿Quién lo invito?</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        @if (kidInformation.invited) {
+                            <span>{{ kidInformation.invite_name }}</span>
+                        } @else {
+                            <span class="text-gray-400 uppercase italic">No aplica</span>
+                        }
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Información de los padres</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 space-y-5">
+
+                        @for (parent of kidInformation.parents; track parent) {
+                            <div class="border rounded-lg p-5 space-y-3">
+                                <label class="font-bold">{{ parent.type }}</label>
+                                <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
+                                    <div class="flex flex-col pb-1">
+                                        <dt class="mb-1 text-gray-500 md:text-sm">Nombre </dt>
+                                        <dd class="text-sm">{{parent.full_name}}</dd>
+                                    </div>
+                                    <div class="flex flex-col py-1">
+                                        <dt class="mb-1 text-gray-500 md:text-sm">Correo electrónico</dt>
+                                        <dd class="text-sm">{{  parent.email }}</dd>
+                                    </div>
+                                    <div class="flex flex-col pt-1">
+                                        <dt class="mb-1 text-gray-500 md:text-sm">Número celular</dt>
+                                        <dd class="text-sm">{{ parent.cellphone }}</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        }
+
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Información Personas Autorizadas</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 space-y-5">
+                        @for (authorize of kidInformation['authorized']; track authorize) {
+                            <div class="border rounded-lg p-5 space-y-3">
+                                <label class="font-bold uppercase">{{ authorize.relationship }}</label>
+                                <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
+                                    <div class="flex flex-col pb-1">
+                                        <dt class="mb-1 text-gray-500 md:text-sm">Nombre </dt>
+                                        <dd class="text-sm">{{authorize.full_name}}</dd>
+                                    </div>
+                                    <div class="flex flex-col pt-1">
+                                        <dt class="mb-1 text-gray-500 md:text-sm">Número celular</dt>
+                                        <dd class="text-sm">{{ authorize.cellphone }}</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        }
+                    </dd>
+                </div>
+                <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm/6 font-medium text-gray-900">Código QR</dt>
+                    <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0 space-y-3">
+                        @if (kidInformation.qr_code !== '') {
+                            <img src="data:image/jpeg;base64,{{qr}}" class="w-2/4 mx-auto" #qrImg>
+                            <div>
+                                <p-button severity="info" (click)="generatePDF()" icon="pi pi-download" label="Descargar QR" [loading]="isLoading"/>
+                            </div>
+                        }
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
