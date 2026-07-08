@@ -1,12 +1,19 @@
-<nav class="fixed top-0 left-0 right-0 z-10 shadow bg-white">
+<nav class="fixed top-0 left-0 right-0 z-50 shadow bg-white">
     <div class="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
+                <!-- Botón hamburguesa para móvil -->
+                <button
+                    type="button"
+                    class="inline-flex items-center p-2 text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    (click)="onToggleSidebar()">
+                    <i class="pi pi-bars text-xl"></i>
+                </button>
                 <ng-content></ng-content>
-                <a class="flex ms-2 md:me-24">
-                    <img src="logotipo-mundodefe.png" class="h-10 me-3" alt="Kingdom Kids 2025" />
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">
-                        Kingdom Kids
+                <a class="flex items-center ms-2 gap-3">
+                    <img [src]="logo" class="h-10 me-1" alt="Logo"/>
+                    <span class="self-center text-lg font-semibold whitespace-nowrap text-sky-600">
+                        {{ projectName }}
                     </span>
                 </a>
             </div>

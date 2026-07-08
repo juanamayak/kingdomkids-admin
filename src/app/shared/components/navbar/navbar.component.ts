@@ -1,45 +1,42 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ButtonModule} from "primeng/button";
-import {MenuModule} from "primeng/menu";
-import {MenuItem, MenuItemCommandEvent} from "primeng/api";
-import {PopoverModule} from "primeng/popover";
-import {InputTextModule} from "primeng/inputtext";
-import {Router, RouterLink} from "@angular/router";
-import {SessionService} from "../../../services/session.service";
-import {AlertsService} from "../../../services/alerts.service";
+import {Component, inject, OnInit, output} from '@angular/core';
+import {ButtonModule} from 'primeng/button';
+import {MenuModule} from 'primeng/menu';
+import {MenuItem} from 'primeng/api';
+import {BrandService} from '../../../core/services/brand.service';
+import {SessionService} from '../../../core/services/session.service';
 
 @Component({
     selector: 'app-navbar',
-    imports: [
-        ButtonModule,
-        MenuModule,
-        PopoverModule,
-        InputTextModule
-    ],
-    providers: [AlertsService],
+    imports: [ButtonModule, MenuModule],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
 
-    private router = inject(Router)
-    public items: MenuItem[] | undefined;
+    private brandService = inject(BrandService);
+    private sessionService = inject(SessionService);
 
-    ngOnInit() {
+    public logo = this.brandService.logo;
+    public projectName = this.brandService.projectName;
+    public items: MenuItem[] | undefined;
+    public toggleSidebar = output<void>();
+
+    ngOnInit(): void {
         this.items = [
             {
-                label: 'Menu',
+                label: 'Menú',
                 items: [
                     {
                         label: 'Cerrar sesión',
                         icon: 'pi pi-sign-out',
-                        command: () => {
-                            sessionStorage.clear();
-                            this.router.navigate(['auth/login']);
-                        }
+                        command: () => this.sessionService.logout()
                     }
                 ]
             }
         ];
+    }
+
+    onToggleSidebar(): void {
+        this.toggleSidebar.emit();
     }
 }

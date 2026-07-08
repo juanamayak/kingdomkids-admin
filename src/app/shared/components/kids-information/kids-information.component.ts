@@ -7,9 +7,9 @@ import {DatePipe, Location} from "@angular/common";
 import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ToggleSwitchModule} from "primeng/toggleswitch";
-import {KidsService} from "../../../services/kids.service";
+import {KidsService} from "../../../features/kids/services/kids.service";
 import {TableModule} from "primeng/table";
-import {AlertsService} from "../../../services/alerts.service";
+import {AlertsService} from "../../../core/services/alerts.service";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 

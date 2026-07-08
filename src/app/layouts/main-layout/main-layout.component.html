@@ -1,9 +1,11 @@
-<app-navbar></app-navbar>
+<app-navbar (toggleSidebar)="toggleSidebar()"></app-navbar>
+<app-sidebar [isOpen]="isSidebarOpen()" (closeSidebar)="closeSidebar()"></app-sidebar>
 
-<app-sidebar></app-sidebar>
+<!-- Overlay para cerrar sidebar en móvil -->
+@if (isSidebarOpen()) {
+    <div class="fixed inset-0 z-30 bg-black/50 sm:hidden" (click)="closeSidebar()"></div>
+}
 
-<div class="p-5 sm:ml-64 mt-16">
+<div class="p-4 sm:ml-64 mt-16">
     <router-outlet></router-outlet>
 </div>
-
-

@@ -1,8 +1,8 @@
 import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
-import {inject} from "@angular/core";
-import {catchError, tap, throwError} from "rxjs";
-import {Router} from "@angular/router";
-import {SessionService} from "../../services/session.service";
+import {inject} from '@angular/core';
+import {catchError, throwError} from 'rxjs';
+import {Router} from '@angular/router';
+import {SessionService} from '../services/session.service';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     const sessionService = inject(SessionService);
@@ -13,18 +13,17 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         return next(req);
     }
 
-    const headers = req.clone({
-        headers: req.headers.set('Authorization', `${token}`),
+    const authReq = req.clone({
+        headers: req.headers.set('Authorization', token)
     });
 
-    return next(headers).pipe(
+    return next(authReq).pipe(
         catchError((err: HttpErrorResponse) => {
-            if (err.status === 403 && router.routerState.snapshot.url !== '/login') {
-                sessionService.logout();
-            } else if (err.status === 401) {
+            if ((err.status === 403 || err.status === 401) &&
+                router.routerState.snapshot.url !== '/auth/login') {
                 sessionService.logout();
             }
-            return throwError(err);
+            return throwError(() => err);
         })
     );
 };

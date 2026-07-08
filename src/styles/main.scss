@@ -2,6 +2,22 @@
 @use 'tailwind';
 @import "primeicons/primeicons.css";
 
+/* ─── CSS Variables de marca (inyectadas por BrandService) ─── */
+
+.bg-login {
+    background-image: var(--bg-login);
+}
+
+.bg-sidebar {
+    background-color: var(--color-sidebar);
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+/* ─── PrimeNG Global Overrides ─── */
+
 label {
     @apply text-slate-600 font-medium text-sm;
 }
@@ -25,18 +41,17 @@ label {
     justify-content: start !important;
 }
 
-/* SweetAlert 2 Custom CSS */
+/* ─── SweetAlert2 ─── */
 
 div#swal2-html-container {
-    padding-top: 0px !important;
+    padding-top: 0 !important;
 }
 
 .swal2-container {
     z-index: 10000 !important;
 }
 
-
-/* Ngx Intl Tel Input */
+/* ─── Ngx Intl Tel Input ─── */
 
 ngx-intl-tel-input {
     width: 100% !important;
@@ -51,15 +66,12 @@ ngx-intl-tel-input {
 }
 
 .iti__country-list {
-    max-height: 300px !important; /* o lo que se adapte a tu UI */
+    max-height: 300px !important;
     overflow-y: auto !important;
-    z-index: 10000 !important; /* Asegura que esté por encima de otros elementos */
+    z-index: 10000 !important;
 }
 
 #country-search-box {
     padding-top: 8px !important;
     padding-bottom: 8px !important;
 }
-
-
-
