@@ -12,8 +12,7 @@ export class KidsService {
 
     public kidToken = 'X1uA4MkMU4UrLw';
 
-    constructor() {
-    }
+    constructor() { }
 
     getKids(): Observable<any> {
         return this.httpClient.get(`${this.url}/register`);
@@ -21,6 +20,10 @@ export class KidsService {
 
     getKidsAgeReport(age: number): Observable<any> {
         return this.httpClient.get(`${this.url}/reports/${age}`, {responseType: 'blob'});
+    }
+
+    getKidsAllReport(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/all`, {responseType: 'blob'});
     }
 
     public getConfirmationRegister(id: any): Observable<any> {

@@ -46,7 +46,7 @@ export class KidsComponent implements OnInit {
     public medicalConditionKids: number[] = [];
     public mdfMembers: number[] = [];
 
-    public selectedAge: number = 0;
+    public selectedAge: number | null | undefined = undefined;
 
     public isDownloading: boolean = false;
 
@@ -70,20 +70,25 @@ export class KidsComponent implements OnInit {
 
     getExcelReport(){
         this.isDownloading = true;
-        this.kidsService.getKidsAgeReport(this.selectedAge).subscribe({
-            next: data => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(data)
-                link.download = `Report-${moment().unix()}.xlsx`;
-                link.click();
 
+        const request$ = this.selectedAge === null
+            ? this.kidsService.getKidsAllReport()
+            : this.kidsService.getKidsAgeReport(this.selectedAge!);
+
+        request$.subscribe({
+            next: data => {
+                const label = this.selectedAge === null ? 'Todos' : `${this.selectedAge}anios`;
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(data);
+                link.download = `KingdomKids-${label}-${moment().unix()}.xlsx`;
+                link.click();
                 this.isDownloading = false;
             },
             error: err => {
                 this.isDownloading = false;
                 this.alertsService.errorAlert(err.error.errors);
             }
-        })
+        });
     }
 
     public viewKidInformation(kid: any){
@@ -98,7 +103,7 @@ export class KidsComponent implements OnInit {
 
     clearFilter() {
         this.table?.clear();
-        this.selectedAge = 0;
+        this.selectedAge = undefined;
     }
 
     filterByAge(event: any): void {

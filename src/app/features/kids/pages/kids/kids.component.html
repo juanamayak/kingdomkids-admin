@@ -73,6 +73,55 @@
         </div>
     </div>
 
+    <!-- Exportar por rango de fechas -->
+    <div class="flex flex-wrap items-end gap-3 p-4 bg-white border border-gray-200 rounded-lg">
+        <div class="flex flex-col gap-1">
+            <label class="text-xs font-medium text-slate-500 uppercase tracking-wide">Fecha de inicio</label>
+            <p-datepicker
+                [ngModel]="dateRangeStart()"
+                (ngModelChange)="dateRangeStart.set($event)"
+                dateFormat="yy-mm-dd"
+                placeholder="YYYY-MM-DD"
+                [showIcon]="true"
+                appendTo="body"
+            ></p-datepicker>
+        </div>
+        <div class="flex flex-col gap-1">
+            <label class="text-xs font-medium text-slate-500 uppercase tracking-wide">Fecha de fin</label>
+            <p-datepicker
+                [ngModel]="dateRangeEnd()"
+                (ngModelChange)="dateRangeEnd.set($event)"
+                dateFormat="yy-mm-dd"
+                placeholder="YYYY-MM-DD"
+                [showIcon]="true"
+                [minDate]="dateRangeStart() ?? undefined"
+                appendTo="body"
+            ></p-datepicker>
+        </div>
+        <p-button
+            (click)="getExcelByDateRange()"
+            label="Exportar Excel"
+            icon="pi pi-file-excel"
+            [loading]="isDownloadingByDate()"
+            [disabled]="!dateRangeStart() || !dateRangeEnd()"
+        />
+        @if (dateRangeStart() || dateRangeEnd()) {
+            <p-button
+                (click)="clearDateRange()"
+                icon="pi pi-times"
+                [rounded]="true"
+                [text]="true"
+                severity="danger"
+                pTooltip="Limpiar fechas"
+                tooltipPosition="top"
+            />
+        }
+        <p class="text-xs text-slate-400">
+            <i class="pi pi-info-circle mr-1"></i>
+            Exporta nombre, apellidos, teléfono y correo de los tutores registrados en el rango seleccionado
+        </p>
+    </div>
+
     <div class="p-5 border rounded-xl text-sm">
         <p-table
             #kidsDt

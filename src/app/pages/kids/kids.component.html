@@ -113,7 +113,7 @@
                 class="w-1/2"
                 (onChange)="filterByAge($event)"
             />
-            @if (selectedAge) {
+            @if (selectedAge !== undefined) {
                 <p-button (click)="getExcelReport()" label="Descargar Excel" icon="pi pi-file-excel" [loading]="isDownloading" />
                 <p-button (click)="clearFilter()" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
             }
@@ -128,7 +128,7 @@
             [paginator]="true"
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['name', 'lastname', 'age']"
+            [globalFilterFields]="['name', 'lastname', 'age', 'parents[0].full_name', 'parents[1].full_name', 'allergy_description', 'medical_condition_description']"
             [rows]="10"
             [rowsPerPageOptions]="[10, 25, 50]"
         >
@@ -140,6 +140,7 @@
                     <th>Edad</th>
                     <th>Alergía</th>
                     <th>Condición Médica</th>
+                    <th>Miembro MDF</th>
                     <th>Menú</th>
                 </tr>
             </ng-template>
@@ -151,16 +152,29 @@
                     <td>{{ kid.age }} años</td>
                     <td>
                         @if (kid.allergy) {
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">SI</span>
+                            <span class="inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                                <i class="pi pi-exclamation-triangle text-[10px]"></i> ALERGIA
+                            </span>
                         } @else {
-                            <span class="text-slate-400 italic text-xs">NO ALERGIAS</span>
+                            <span class="text-slate-400 italic text-xs">Sin alergias</span>
                         }
                     </td>
                     <td>
                         @if (kid.medical_condition) {
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">SI</span>
+                            <span class="inline-flex items-center gap-1 bg-orange-100 text-orange-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                                <i class="pi pi-heart text-[10px]"></i> CONDICIÓN
+                            </span>
                         } @else {
-                            <span class="text-slate-400 italic text-xs">SIN CONDICIONES MÉDICAS</span>
+                            <span class="text-slate-400 italic text-xs">Sin condiciones</span>
+                        }
+                    </td>
+                    <td>
+                        @if (kid.mdf_member) {
+                            <span class="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                                <i class="pi pi-check-circle text-[10px]"></i> MIEMBRO
+                            </span>
+                        } @else {
+                            <span class="text-slate-400 italic text-xs">Visitante</span>
                         }
                     </td>
                     <td>

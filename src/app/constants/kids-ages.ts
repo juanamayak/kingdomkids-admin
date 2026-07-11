@@ -1,5 +1,9 @@
 export const KidsAges = [
     {
+        name: 'Todos',
+        value: null
+    },
+    {
         name: '5 años',
         value: 5
     },

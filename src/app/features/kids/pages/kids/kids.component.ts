@@ -13,6 +13,8 @@ import moment from 'moment';
 import {KidsService, Kid} from '../../services/kids.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {KidsAges} from '../../../../core/constants/kids-ages';
+import {DatePickerModule} from 'primeng/datepicker';
+import {TooltipModule} from 'primeng/tooltip';
 
 @Component({
     selector: 'app-kids',
@@ -25,7 +27,9 @@ import {KidsAges} from '../../../../core/constants/kids-ages';
         IconFieldModule,
         PopoverModule,
         SelectModule,
-        FormsModule
+        FormsModule,
+        DatePickerModule,
+        TooltipModule,
     ],
     templateUrl: './kids.component.html',
     styleUrl: './kids.component.scss'
@@ -45,6 +49,11 @@ export class KidsComponent implements OnInit {
     public mdfMembers = signal<Kid[]>([]);
     public selectedAge = signal<number>(0);
     public isDownloading = signal(false);
+
+    // Filtro por rango de fechas
+    public dateRangeStart = signal<Date | null>(null);
+    public dateRangeEnd = signal<Date | null>(null);
+    public isDownloadingByDate = signal(false);
 
     ngOnInit(): void {
         this.getKids();
@@ -77,6 +86,39 @@ export class KidsComponent implements OnInit {
                 this.alertsService.errorAlert(err.error?.errors ?? [{ message: 'Error al descargar reporte' }]);
             }
         });
+    }
+
+    getExcelByDateRange(): void {
+        const start = this.dateRangeStart();
+        const end = this.dateRangeEnd();
+
+        if (!start || !end) {
+            this.alertsService.errorAlert([{ message: 'Selecciona una fecha de inicio y una fecha de fin.' }]);
+            return;
+        }
+
+        const startDate = moment(start).format('YYYY-MM-DD');
+        const endDate = moment(end).format('YYYY-MM-DD');
+
+        this.isDownloadingByDate.set(true);
+        this.kidsService.getKidsByDateRangeReport(startDate, endDate).subscribe({
+            next: data => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(data);
+                link.download = `Registros-${startDate}-al-${endDate}.xlsx`;
+                link.click();
+                this.isDownloadingByDate.set(false);
+            },
+            error: err => {
+                this.isDownloadingByDate.set(false);
+                this.alertsService.errorAlert(err.error?.errors ?? [{ message: 'Error al descargar reporte por fecha' }]);
+            }
+        });
+    }
+
+    clearDateRange(): void {
+        this.dateRangeStart.set(null);
+        this.dateRangeEnd.set(null);
     }
 
     viewKidInformation(kid: Kid): void {

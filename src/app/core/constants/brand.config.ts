@@ -1,6 +1,6 @@
 export const BRAND_CONFIG = {
     companyName: 'Mundo de Fe Playa del Carmen',
-    projectName: 'KingdomKids',
+    projectName: 'Mundo de Fe Playa',
     shortName: 'KK',
     copyright: 'Mundo de Fe Playa del Carmen',
 

@@ -21,6 +21,13 @@ export class KidsService {
         return this.http.get(`${this.url}/reports/${age}`, { responseType: 'blob' });
     }
 
+    getKidsByDateRangeReport(startDate: string, endDate: string): Observable<Blob> {
+        return this.http.get(`${this.url}/reports/by-date`, {
+            params: { startDate, endDate },
+            responseType: 'blob',
+        });
+    }
+
     getConfirmationRegister(id: number): Observable<{ qr: string }> {
         return this.http.get<{ qr: string }>(`${this.url}/register/confirmation/${id}`);
     }
