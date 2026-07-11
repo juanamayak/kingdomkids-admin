@@ -6,20 +6,20 @@ export const routes: Routes = [
         path: '',
         children: [
             {
-                path: 'auth', loadChildren: () => import('./auth/auth.routes')
+                path: 'auth', loadChildren: () => import('./features/auth/auth.routes')
             },
-            {path: '', pathMatch: 'full', redirectTo: 'auth/login'}
+            { path: '', pathMatch: 'full', redirectTo: 'auth/login' }
         ]
     },
     {
         path: '',
         component: MainLayoutComponent,
-        // canActivate: [AuthGuard],
+        // canActivate: [authGuard], // TODO: Activar cuando el backend tenga auth en todos los endpoints
         children: [
             {
-                path: '', loadChildren: () => import('./pages/pages.routes')
+                path: '', loadChildren: () => import('./features/features.routes')
             },
         ],
     },
-    {path: '**', redirectTo: 'auth/login'} // TODO: Redirigir a PageNotFound
+    { path: '**', redirectTo: 'auth/login' } // TODO: Redirigir a PageNotFound
 ];

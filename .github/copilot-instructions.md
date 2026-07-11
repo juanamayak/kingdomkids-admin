@@ -92,23 +92,24 @@ El workspace contiene **3 repositorios independientes**:
 ### kingdomkids-admin (feature-based)
 ```
 src/app/
-  core/              # guards, interceptors, servicios singleton (auth, error)
-    interceptors/
-      jwt.interceptor.ts
-  shared/            # componentes, pipes y directivas reutilizables
+  core/
+    constants/             # brand.config, kids-ages, theme-presets/kk-theme
+    guards/                # auth.guard
+    interceptors/          # jwt.interceptor
+    services/              # brand.service, session.service, alerts.service
+  features/
+    auth/                  # auth.routes + pages/login, pages/change-password
+    kids/                  # kids.routes + pages/kids/, services/kids.service
+    features.routes.ts     # rutas de features bajo MainLayout
+  layouts/
+    main-layout/           # layout principal con sidebar y navbar
+  shared/
     components/
       navbar/
       sidebar/
       skeleton/
       kids-information/
-  services/          # servicios HTTP (session, kids, alerts)
-  pages/             # feature modules por ruta
-    kids/            # listado, detalle, reportes de niños
-  layouts/
-    main-layout/     # layout principal con sidebar
-  auth/              # login, cambio de contraseña
-  constants/         # constantes y catálogos (edades, etc.)
-  environments/      # environment.ts (prod) + environment.development.ts (dev)
+  environments/            # environment.ts (prod) + environment.development.ts (dev)
 ```
 
 ### kingdomkids-register (simple, público)

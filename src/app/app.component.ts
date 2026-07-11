@@ -1,40 +1,20 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {OverlayContainer} from "@angular/cdk/overlay";
-import {RouterOutlet} from "@angular/router";
+import {Component, inject, OnInit} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {BrandService} from './core/services/brand.service';
 
 @Component({
     selector: 'app-root',
-    imports: [
-        RouterOutlet,
-    ],
+    imports: [RouterOutlet, ToastModule, ConfirmDialogModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-    // Cambia esto según la empresa
-    public companyName = 'fb'; // gs = Gusa Capital, fb = Flyback, vc = Vacations Center
 
-    constructor(
-        private overlayContainer: OverlayContainer,
-        private renderer: Renderer2,
-    ) {
-    }
+    private brandService = inject(BrandService);
 
     ngOnInit(): void {
-        this.applyTheme(this.companyName);
-    }
-
-    applyTheme(company: string): void {
-        const themeClass = `${company}-theme`;
-
-        // Elimina todas las clases de tema anteriores
-        const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
-        overlayContainerClasses.remove('gs-theme', 'fb-theme', 'vc-theme');
-
-        // Añade la clase del tema seleccionado
-        overlayContainerClasses.add(themeClass);
-
-        // Aplica la clase al elemento principal del componente
-        this.renderer.addClass(document.body, themeClass);
+        this.brandService.init();
     }
 }
