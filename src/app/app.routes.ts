@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {MainLayoutComponent} from "./layouts/main-layout/main-layout.component";
+import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -14,7 +15,7 @@ export const routes: Routes = [
     {
         path: '',
         component: MainLayoutComponent,
-        // canActivate: [authGuard], // TODO: Activar cuando el backend tenga auth en todos los endpoints
+        canActivate: [authGuard],
         children: [
             {
                 path: '', loadChildren: () => import('./features/features.routes')

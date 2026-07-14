@@ -204,4 +204,51 @@
         </div>
     }
 
+    <!-- Historial de Check-ins -->
+    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="text-base font-semibold text-slate-700">Historial de asistencia</h2>
+            <p class="text-sm text-slate-400 mt-0.5">Entradas y salidas registradas</p>
+        </div>
+
+        @if (checkinHistory().length === 0) {
+            <div class="py-10 flex flex-col items-center gap-2 text-slate-400">
+                <i class="pi pi-calendar text-2xl"></i>
+                <p class="text-sm">Sin registros de asistencia</p>
+            </div>
+        } @else {
+            <ul class="divide-y divide-gray-100">
+                @for (record of checkinHistory(); track record.id) {
+                    <li class="px-6 py-3 flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                 [class]="record.checkout_date ? 'bg-gray-100 text-slate-500' : 'bg-emerald-100 text-emerald-600'">
+                                <i [class]="record.checkout_date ? 'pi pi-sign-out text-xs' : 'pi pi-sign-in text-xs'"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-700">
+                                    Entrada: {{ record.checkin_date | date: 'dd/MM/yyyy HH:mm' }}
+                                </p>
+                                @if (record.checkout_date) {
+                                    <p class="text-xs text-slate-400">
+                                        Salida: {{ record.checkout_date | date: 'dd/MM/yyyy HH:mm' }}
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                        @if (record.checkout_date) {
+                            <span class="inline-flex items-center gap-1 text-xs bg-gray-100 text-slate-500 px-2 py-0.5 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Completado
+                            </span>
+                        } @else {
+                            <span class="inline-flex items-center gap-1 text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Presente
+                            </span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
 </div>

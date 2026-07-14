@@ -18,13 +18,15 @@ export class NavbarComponent implements OnInit {
 
     public logo = this.brandService.logo;
     public projectName = this.brandService.projectName;
+    public username = this.sessionService.getUsername();
     public items: MenuItem[] | undefined;
     public toggleSidebar = output<void>();
 
     ngOnInit(): void {
+        this.username = this.sessionService.getUsername();
         this.items = [
             {
-                label: 'Menú',
+                label: this.username,
                 items: [
                     {
                         label: 'Cerrar sesión',

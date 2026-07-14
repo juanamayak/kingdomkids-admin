@@ -1,0 +1,94 @@
+<div class="space-y-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold text-slate-800">Dashboard</h1>
+            <p class="text-sm text-slate-400 mt-0.5">{{ today | date: "EEEE, d 'de' MMMM yyyy" : '' : 'es-MX' }}</p>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        @for (card of kpiCards(); track card.label) {
+            <div
+                [class]="'bg-white rounded-xl border border-gray-200 p-5 flex items-center gap-4 ' + (card.route ? 'cursor-pointer hover:shadow-md transition-shadow' : '')"
+                [routerLink]="card.route ?? null">
+                <div [class]="'w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ' + card.color">
+                    <i [class]="card.icon + ' text-xl'"></i>
+                </div>
+                <div>
+                    <p class="text-2xl font-bold text-slate-800">{{ card.value }}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ card.label }}</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Check-ins recientes del día -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <div>
+                <h2 class="text-base font-semibold text-slate-700">Check-ins de hoy</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Entradas registradas en el día</p>
+            </div>
+            <a routerLink="/kids/checkins" class="text-xs text-sky-600 hover:underline font-medium">Ver todos →</a>
+        </div>
+
+        @if (todayCheckins().length === 0) {
+            <div class="py-12 flex flex-col items-center gap-2 text-slate-400">
+                <i class="pi pi-calendar text-3xl"></i>
+                <p class="text-sm">No hay check-ins registrados hoy</p>
+            </div>
+        } @else {
+            <ul class="divide-y divide-gray-100">
+                @for (checkin of todayCheckins().slice(0, 8); track checkin.id) {
+                    <li class="px-6 py-3 flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-semibold shrink-0">
+                                {{ checkin.kid_id }}
+                            </div>
+                            <span class="text-sm text-slate-700">Niño #{{ checkin.kid_id }}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-slate-400">
+                                {{ checkin.checkin_date | date: 'HH:mm' }}
+                            </span>
+                            @if (checkin.checkout_date) {
+                                <span class="inline-flex items-center gap-1 text-xs bg-gray-100 text-slate-500 px-2 py-0.5 rounded-full">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Salida
+                                </span>
+                            } @else {
+                                <span class="inline-flex items-center gap-1 text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Presente
+                                </span>
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <!-- Módulos futuros (CRM preview) -->
+    <div>
+        <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Próximos módulos</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            @for (mod of [
+                {label: 'Membresía', icon: 'pi pi-address-book'},
+                {label: 'Eventos', icon: 'pi pi-calendar'},
+                {label: 'Finanzas', icon: 'pi pi-dollar'},
+                {label: 'Voluntarios', icon: 'pi pi-id-card'},
+                {label: 'Comunicación', icon: 'pi pi-send'}
+            ]; track mod.label) {
+                <div class="bg-white border border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center gap-2 opacity-50">
+                    <i [class]="mod.icon + ' text-2xl text-slate-400'"></i>
+                    <span class="text-xs text-slate-400 font-medium">{{ mod.label }}</span>
+                    <span class="text-[10px] bg-gray-100 text-slate-400 px-2 py-0.5 rounded">Próximamente</span>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+

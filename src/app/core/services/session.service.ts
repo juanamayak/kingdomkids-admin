@@ -4,6 +4,13 @@ import {Router} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 
+export interface SessionPayload {
+    id: number;
+    username: string;
+    iat?: number;
+    exp?: number;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -30,5 +37,20 @@ export class SessionService {
 
     getToken(): string | null {
         return sessionStorage.getItem(this.jwtToken);
+    }
+
+    getPayload(): SessionPayload | null {
+        const token = this.getToken();
+        if (!token) return null;
+        try {
+            const payload = token.split('.')[1];
+            return JSON.parse(atob(payload)) as SessionPayload;
+        } catch {
+            return null;
+        }
+    }
+
+    getUsername(): string {
+        return this.getPayload()?.username ?? 'Admin';
     }
 }

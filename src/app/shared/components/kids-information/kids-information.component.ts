@@ -2,6 +2,7 @@ import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } fr
 import { ButtonModule } from 'primeng/button';
 import { DatePipe, Location } from '@angular/common';
 import { KidsService } from '../../../features/kids/services/kids.service';
+import { CheckinService, CheckinRecord } from '../../../features/kids/services/checkin.service';
 import { AlertsService } from '../../../core/services/alerts.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -51,12 +52,14 @@ export class KidsInformationComponent implements OnInit {
     @ViewChild('qrImg') qrImg!: ElementRef<HTMLImageElement>;
 
     private kidsService = inject(KidsService);
+    private checkinService = inject(CheckinService);
     private alertsService = inject(AlertsService);
     private location = inject(Location);
 
     public kid = signal<KidDetail>({} as KidDetail);
     public qr = signal<string>('');
     public isLoading = signal<boolean>(false);
+    public checkinHistory = signal<CheckinRecord[]>([]);
 
     public initials = computed(() => this.getInitials(`${this.kid().name} ${this.kid().lastname}`));
 
@@ -65,6 +68,7 @@ export class KidsInformationComponent implements OnInit {
         if (kidToken) {
             this.kid.set(JSON.parse(atob(kidToken)) as KidDetail);
             this.getKidInformation();
+            this.getCheckinHistory();
         }
     }
 
@@ -72,6 +76,13 @@ export class KidsInformationComponent implements OnInit {
         this.kidsService.getConfirmationRegister(this.kid().id).subscribe({
             next: data => this.qr.set(data.qr),
             error: err => this.alertsService.errorAlert(err.error.errors),
+        });
+    }
+
+    getCheckinHistory(): void {
+        this.checkinService.getCheckinsByKid(this.kid().id).subscribe({
+            next: data => this.checkinHistory.set(data.checkins),
+            error: () => { /* silencioso */ }
         });
     }
 

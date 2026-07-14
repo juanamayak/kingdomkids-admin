@@ -1,0 +1,124 @@
+<div class="space-y-6">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+            <h1 class="text-2xl font-semibold text-slate-800">Check-ins del día</h1>
+            <p class="text-sm text-slate-400 mt-0.5">{{ today | date: "EEEE, d 'de' MMMM yyyy" : '' : 'es-MX' }}</p>
+        </div>
+        <button
+            type="button"
+            (click)="refresh()"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors">
+            <i class="pi pi-refresh"></i>
+            Actualizar
+        </button>
+    </div>
+
+    <!-- Resumen -->
+    <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                <i class="pi pi-users text-lg"></i>
+            </div>
+            <div>
+                <p class="text-xl font-bold text-slate-800">{{ rows().length }}</p>
+                <p class="text-xs text-slate-400">Total entradas</p>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <i class="pi pi-check-circle text-lg"></i>
+            </div>
+            <div>
+                <p class="text-xl font-bold text-slate-800">{{ present() }}</p>
+                <p class="text-xs text-slate-400">Presentes</p>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-gray-50 text-slate-500 flex items-center justify-center shrink-0">
+                <i class="pi pi-sign-out text-lg"></i>
+            </div>
+            <div>
+                <p class="text-xl font-bold text-slate-800">{{ exited() }}</p>
+                <p class="text-xs text-slate-400">Con salida</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <p-table
+            [value]="rows()"
+            [loading]="isLoading()"
+            [paginator]="true"
+            [rows]="15"
+            [rowsPerPageOptions]="[15, 30, 50]"
+            styleClass="p-datatable-sm"
+            dataKey="id">
+
+            <ng-template pTemplate="caption">
+                <div class="flex items-center justify-between px-2">
+                    <span class="text-sm font-semibold text-slate-700">Registro de entradas y salidas</span>
+                    <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" placeholder="Buscar..." class="text-sm" />
+                    </p-iconfield>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="text-left text-xs text-slate-500">#</th>
+                    <th class="text-left text-xs text-slate-500">Niño</th>
+                    <th class="text-left text-xs text-slate-500">Hora de entrada</th>
+                    <th class="text-left text-xs text-slate-500">Hora de salida</th>
+                    <th class="text-left text-xs text-slate-500">Estado</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-row>
+                <tr>
+                    <td class="text-sm text-slate-500">{{ row.id }}</td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-semibold shrink-0">
+                                {{ row.kidName.charAt(0) }}
+                            </div>
+                            <span class="text-sm font-medium text-slate-700">{{ row.kidName }}</span>
+                        </div>
+                    </td>
+                    <td class="text-sm text-slate-600">
+                        {{ row.checkin_date | date: 'HH:mm' }}
+                    </td>
+                    <td class="text-sm text-slate-600">
+                        @if (row.checkout_date) {
+                            {{ row.checkout_date | date: 'HH:mm' }}
+                        } @else {
+                            <span class="text-slate-300 italic text-xs">—</span>
+                        }
+                    </td>
+                    <td>
+                        @if (row.checkout_date) {
+                            <p-tag value="Salida" severity="secondary" />
+                        } @else {
+                            <p-tag value="Presente" severity="success" />
+                        }
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5" class="py-12 text-center text-slate-400 text-sm">
+                        <i class="pi pi-calendar text-2xl block mb-2"></i>
+                        No hay check-ins registrados hoy
+                    </td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </div>
+
+</div>
+
