@@ -1,4 +1,4 @@
-import {Component, ViewChild, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {CheckinService, CheckinRecord} from '../../services/checkin.service';
 import {KidsService, Kid} from '../../services/kids.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
@@ -9,7 +9,6 @@ import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
 import {InputTextModule} from 'primeng/inputtext';
 import {TagModule} from 'primeng/tag';
-import {Table} from 'primeng/table';
 
 export interface CheckinRow extends CheckinRecord {
     kidName: string;
@@ -22,8 +21,6 @@ export interface CheckinRow extends CheckinRecord {
     styleUrl: './checkins.component.scss'
 })
 export class CheckinsComponent implements OnInit {
-
-    @ViewChild('kidsDt') table: Table | undefined;
 
     private checkinService = inject(CheckinService);
     private kidsService = inject(KidsService);
@@ -42,8 +39,6 @@ export class CheckinsComponent implements OnInit {
         }));
     });
 
-    public present = computed(() => this.rows().filter((r: CheckinRow) => !r.checkout_date).length);
-    public exited = computed(() => this.rows().filter((r: CheckinRow) => !!r.checkout_date).length);
 
     ngOnInit(): void {
         this.loadData();

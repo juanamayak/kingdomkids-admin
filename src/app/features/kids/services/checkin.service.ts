@@ -12,6 +12,11 @@ export interface CheckinRecord {
     status: number;
     createdAt: string;
     updatedAt: string;
+    kid?: {
+        id: number;
+        name: string;
+        lastname: string;
+    };
 }
 
 export interface CheckinWithKid extends CheckinRecord {

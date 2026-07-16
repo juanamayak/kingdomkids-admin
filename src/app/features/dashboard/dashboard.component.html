@@ -4,15 +4,15 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-semibold text-slate-800">Dashboard</h1>
-            <p class="text-sm text-slate-400 mt-0.5">{{ today | date: "EEEE, d 'de' MMMM yyyy" : '' : 'es-MX' }}</p>
+            <p class="text-sm text-slate-400 mt-0.5">{{ today | date: "EEEE, d 'de' MMMM yyyy" }}</p>
         </div>
     </div>
 
     <!-- KPI Cards -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         @for (card of kpiCards(); track card.label) {
             <div
-                [class]="'bg-white rounded-xl border border-gray-200 p-5 flex items-center gap-4 ' + (card.route ? 'cursor-pointer hover:shadow-md transition-shadow' : '')"
+                [class]="'bg-white rounded-xl border border-gray-200 p-5 flex flex-col items-start gap-3 ' + (card.route ? 'cursor-pointer hover:shadow-md transition-shadow' : '')"
                 [routerLink]="card.route ?? null">
                 <div [class]="'w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ' + card.color">
                     <i [class]="card.icon + ' text-xl'"></i>
@@ -35,7 +35,7 @@
             <a routerLink="/kids/checkins" class="text-xs text-sky-600 hover:underline font-medium">Ver todos →</a>
         </div>
 
-        @if (todayCheckins().length === 0) {
+        @if (!todayCheckins() || todayCheckins().length === 0) {
             <div class="py-12 flex flex-col items-center gap-2 text-slate-400">
                 <i class="pi pi-calendar text-3xl"></i>
                 <p class="text-sm">No hay check-ins registrados hoy</p>
@@ -46,9 +46,11 @@
                     <li class="px-6 py-3 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-semibold shrink-0">
-                                {{ checkin.kid_id }}
+                                {{ getKidInitials(checkin) }}
                             </div>
-                            <span class="text-sm text-slate-700">Niño #{{ checkin.kid_id }}</span>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-medium text-slate-700">{{ getKidFullName(checkin) }}</span>
+                            </div>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="text-xs text-slate-400">

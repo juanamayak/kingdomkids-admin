@@ -14,9 +14,9 @@ export const BRAND_CONFIG = {
 
     // Colores principales (para CSS variables)
     colors: {
-        primary: '#0284c7',      // sky-600
-        primaryHover: '#0369a1', // sky-700
-        sidebar: '#082f49'       // sky-950
+        primary: '#2563eb',      // blue-600
+        primaryHover: '#1d4ed8', // blue-700
+        sidebar: '#172554'       // blue-950
     }
 };
 

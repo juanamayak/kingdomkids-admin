@@ -16,14 +16,14 @@
     </div>
 
     <!-- Resumen -->
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 gap-4">
         <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
                 <i class="pi pi-users text-lg"></i>
             </div>
             <div>
                 <p class="text-xl font-bold text-slate-800">{{ rows().length }}</p>
-                <p class="text-xs text-slate-400">Total entradas</p>
+                <p class="text-xs text-slate-400">Total registros</p>
             </div>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
@@ -31,17 +31,8 @@
                 <i class="pi pi-check-circle text-lg"></i>
             </div>
             <div>
-                <p class="text-xl font-bold text-slate-800">{{ present() }}</p>
-                <p class="text-xs text-slate-400">Presentes</p>
-            </div>
-        </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg bg-gray-50 text-slate-500 flex items-center justify-center shrink-0">
-                <i class="pi pi-sign-out text-lg"></i>
-            </div>
-            <div>
-                <p class="text-xl font-bold text-slate-800">{{ exited() }}</p>
-                <p class="text-xs text-slate-400">Con salida</p>
+                <p class="text-xl font-bold text-slate-800">{{ rows().length }}</p>
+                <p class="text-xs text-slate-400">Niños presentes</p>
             </div>
         </div>
     </div>
@@ -59,7 +50,7 @@
 
             <ng-template pTemplate="caption">
                 <div class="flex items-center justify-between px-2">
-                    <span class="text-sm font-semibold text-slate-700">Registro de entradas y salidas</span>
+                    <span class="text-sm font-semibold text-slate-700">Registro de entradas</span>
                     <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
                         <input pInputText type="text" placeholder="Buscar..." class="text-sm" />

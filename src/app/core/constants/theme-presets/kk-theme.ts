@@ -4,25 +4,25 @@ import Aura from '@primeng/themes/aura';
 export const KkTheme = definePreset(Aura, {
     semantic: {
         primary: {
-            50: '{sky.50}',
-            100: '{sky.100}',
-            200: '{sky.200}',
-            300: '{sky.300}',
-            400: '{sky.400}',
-            500: '{sky.500}',
-            600: '{sky.600}',
-            700: '{sky.700}',
-            800: '{sky.800}',
-            900: '{sky.900}',
-            950: '{sky.950}'
+            50: '{blue.50}',
+            100: '{blue.100}',
+            200: '{blue.200}',
+            300: '{blue.300}',
+            400: '{blue.400}',
+            500: '{blue.500}',
+            600: '{blue.600}',
+            700: '{blue.700}',
+            800: '{blue.800}',
+            900: '{blue.900}',
+            950: '{blue.950}'
         },
         colorScheme: {
             light: {
                 primary: {
-                    color: '{sky.600}',
+                    color: '{blue.600}',
                     inverseColor: '#ffffff',
-                    hoverColor: '{sky.700}',
-                    activeColor: '{sky.700}'
+                    hoverColor: '{blue.700}',
+                    activeColor: '{blue.700}'
                 }
             }
         }

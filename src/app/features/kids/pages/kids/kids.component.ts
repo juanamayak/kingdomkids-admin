@@ -8,7 +8,7 @@ import {InputIconModule} from 'primeng/inputicon';
 import {InputTextModule} from 'primeng/inputtext';
 import {SelectModule} from 'primeng/select';
 import {FormsModule} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import moment from 'moment';
 import {KidsService, Kid} from '../../services/kids.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
@@ -30,6 +30,7 @@ import {TooltipModule} from 'primeng/tooltip';
         FormsModule,
         DatePickerModule,
         TooltipModule,
+        RouterLink,
     ],
     templateUrl: './kids.component.html',
     styleUrl: './kids.component.scss'
@@ -44,9 +45,6 @@ export class KidsComponent implements OnInit {
 
     public kidsAges = KidsAges;
     public kids = signal<Kid[]>([]);
-    public allergyKids = signal<Kid[]>([]);
-    public medicalConditionKids = signal<Kid[]>([]);
-    public mdfMembers = signal<Kid[]>([]);
     public selectedAge = signal<number>(0);
     public isDownloading = signal(false);
 
@@ -63,9 +61,6 @@ export class KidsComponent implements OnInit {
         this.kidsService.getKids().subscribe({
             next: data => {
                 this.kids.set(data.kids);
-                this.allergyKids.set(data.kids.filter(k => k.allergy === 1));
-                this.medicalConditionKids.set(data.kids.filter(k => k.medical_condition === 1));
-                this.mdfMembers.set(data.kids.filter(k => k.mdf_member === 1));
             },
             error: err => this.alertsService.errorAlert(err.error?.errors ?? [{ message: 'Error al cargar niños' }])
         });

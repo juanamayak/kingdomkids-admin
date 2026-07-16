@@ -1,52 +1,12 @@
 <div class="space-y-5">
-    <div class="flex items-center space-x-2">
-        <i class="pi pi-user"></i>
-        <h3 class="text-xl font-semibold">Registro de niños</h3>
-    </div>
-    <div class="grid md:grid-cols-4 border border-gray-200 shadow-2xs rounded-xl overflow-hidden">
-        <!-- Card: Total -->
-        <a class="block p-4 md:p-5 relative bg-white hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 before:absolute before:top-0 before:start-0 before:w-full before:h-px md:before:w-px md:before:h-full before:bg-gray-200 first:before:bg-transparent">
-            <div class="flex flex-col lg:flex-row gap-y-3 gap-x-5">
-                <i class="pi pi-users"></i>
-                <div class="grow">
-                    <p class="text-xs uppercase font-medium text-gray-800">Niños registrados</p>
-                    <h3 class="mt-1 text-xl sm:text-2xl font-bold text-sky-600">{{ kids().length }}</h3>
-                    <p class="mt-1 text-sm text-gray-500">totales</p>
-                </div>
-            </div>
-        </a>
-        <!-- Card: Alérgicos -->
-        <a class="block p-4 md:p-5 relative bg-white hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 before:absolute before:top-0 before:start-0 before:w-full before:h-px md:before:w-px md:before:h-full before:bg-gray-200 first:before:bg-transparent">
-            <div class="flex flex-col lg:flex-row gap-y-3 gap-x-5">
-                <i class="pi pi-bookmark"></i>
-                <div class="grow">
-                    <p class="text-xs uppercase font-medium text-gray-800">Niños alérgicos</p>
-                    <h3 class="mt-1 text-xl sm:text-2xl font-bold text-sky-600">{{ allergyKids().length }}</h3>
-                    <p class="mt-1 text-sm text-gray-500">de <span class="font-semibold text-gray-800">{{ kids().length }}</span></p>
-                </div>
-            </div>
-        </a>
-        <!-- Card: Condición médica -->
-        <a class="block p-4 md:p-5 relative bg-white hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 before:absolute before:top-0 before:start-0 before:w-full before:h-px md:before:w-px md:before:h-full before:bg-gray-200 first:before:bg-transparent">
-            <div class="flex flex-col lg:flex-row gap-y-3 gap-x-5">
-                <i class="pi pi-star"></i>
-                <div class="grow">
-                    <p class="text-xs uppercase font-medium text-gray-800">Condición médica</p>
-                    <h3 class="mt-1 text-xl sm:text-2xl font-bold text-sky-600">{{ medicalConditionKids().length }}</h3>
-                    <p class="mt-1 text-sm text-gray-500">de <span class="font-semibold text-gray-800">{{ kids().length }}</span></p>
-                </div>
-            </div>
-        </a>
-        <!-- Card: Miembros MDF -->
-        <a class="block p-4 md:p-5 relative bg-white hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 before:absolute before:top-0 before:start-0 before:w-full before:h-px md:before:w-px md:before:h-full before:bg-gray-200 first:before:bg-transparent">
-            <div class="flex flex-col lg:flex-row gap-y-3 gap-x-5">
-                <i class="pi pi-check-circle"></i>
-                <div class="grow">
-                    <p class="text-xs uppercase font-medium text-gray-800">Miembros Mundo de Fe</p>
-                    <h3 class="mt-1 text-xl sm:text-2xl font-bold text-sky-600">{{ mdfMembers().length }}</h3>
-                    <p class="mt-1 text-sm text-gray-500">de <span class="font-semibold text-gray-800">{{ kids().length }}</span></p>
-                </div>
-            </div>
+    <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <i class="pi pi-user"></i>
+            <h3 class="text-xl font-semibold">Registro de niños</h3>
+        </div>
+        <a routerLink="/dashboard" class="text-xs text-sky-600 hover:underline font-medium">
+            <i class="pi pi-arrow-left mr-1"></i>
+            Ver estadísticas en Dashboard
         </a>
     </div>
 

@@ -1,6 +1,5 @@
 import {Component, input, output, signal} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {NgClass} from '@angular/common';
 
 export interface SidebarItem {
     label: string;
@@ -18,7 +17,7 @@ export interface SidebarGroup {
 
 @Component({
     selector: 'app-sidebar',
-    imports: [RouterLink, RouterLinkActive, NgClass],
+    imports: [RouterLink, RouterLinkActive],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'
 })
@@ -41,7 +40,8 @@ export class SidebarComponent {
             items: [
                 { label: 'Registro de niños', icon: 'pi pi-users', route: '/kids' },
                 { label: 'Check-ins del día', icon: 'pi pi-calendar-clock', route: '/kids/checkins' },
-                { label: 'Reportes', icon: 'pi pi-file-excel', route: '/kids/reportes' },
+                // Reportes deshabilitado temporalmente - pendiente de implementación
+                // { label: 'Reportes', icon: 'pi pi-file-excel', route: '/kids/reportes' },
             ]
         },
         {
